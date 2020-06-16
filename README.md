@@ -13,6 +13,7 @@ Potem drugi obrazek - moduły Sparka: cztery ciemnoniebieskie prostokąty.
 Wychodzimy od RDD (_Resilient Distributed Dataset_), potem _Spark SQL_, _Spark Streaming_.
 Rzadziej coś konkretnego z _MLib (machine learning)_ - w tym obszarze częściej, szybciej, łatwiej można pooglądać w _Python_ i _Keras_ albo innym _Tensorflow_ czy _PyTorch_.
 Tylko nieliczni "zaglądają" do ostatniego klocka _GraphX (graph)_.
+
 A bo grafy to wąskie zastosowanie, a bo API oparte na "starym, niskopoziomowym" RDD (bez DataFrame/Dataset)...
 Ten ostatni zarzut można próbować odeprzeć wprowadzając bibliotekę _GraphFrames_ (_GraphX is to RDDs as GraphFrames are to DataFrames._) szczególnie z wykorzystaniem tzw. _motif finding_.
 Ten prosty DSL pozwala już na tworzenie pewnych wzorców wyszukiwania np. `(a)-[e]->(b)` czyli wierzchołków `a` i `b` połączonych krawędzią `e`
@@ -51,15 +52,8 @@ Tak to zjawisko nazywa nasz 5-letni syn W***k).
 
 ### _Wóz nurza się w zieloność i jak łódka brodzi_ czyli czym jest Cypher
 
-Cypher jest deklaratywnym językiem zapytań, który umożliwia nam wyszukiwanie i modyfikację danych grafowych.
-Pierwotnie stworzony na potrzeby bazy [Neo4j](https://neo4j.com/), [lidera w rankingu baz grafowych](https://db-engines.com/en/ranking/graph+dbms), dla wielu praktycznie synonimu takiej bazy.
-W skrócie można powiedzieć, że jest "eskuelem dla grafów".
-Słowa kluczowe `WHERE` czy `ORDER BY` inspirowane właśnie są przez SQL. Język czerpie także ze SPARQL (_pattern matching_) czy Haskella i Pythona. 
-Cypher jest dość intuicyjny i _human-readable_. Z racji tego, że nawiasy okrągłe `()` reprezentują wierzchołki a `-->` krawędzie w opisie przewija się nawet sformułowanie o  _ASCII art_.
-
-
 Truizmem jest stwierdzenie, że graf składa się z wierzchołków i krawędzi.
-Wierzchołki definiują nam pewien byt (osobę, miejsce, rzecz, kategorię itd.), krawędzie relacje między wierzchołkami czyli jak te wierzchołki są ze sobą połączone (jestem żonaty z, mieszkam w, znam, lubię, jestem właścicielem itd.).
+Wierzchołki definiują nam pewien byt (osobę, miejsce, rzecz, kategorię itd.), krawędzie relacje między wierzchołkami czyli jak te wierzchołki są ze sobą połączone ("jestem żonaty z", "mieszkam w", "znam", "lubię", "jestem właścicielem" itd.).
 W przypadku bazy Neo4j każdy wierzchołek może mieć wiele etykiet (_label_), które określają jego typ. 
 Każdy wierzchołek i krawędź mogą zawierać dodatkowe atrybuty (_properties_) co tworzy nam tzw. _property graph_.
 Przekładając opis naszych danych w języku naturalnym na schemat bazy: 
@@ -69,6 +63,12 @@ Przekładając opis naszych danych w języku naturalnym na schemat bazy:
 - przysłówek (_adverb_) to atrybut  (_property_) krawędzi
 
 ![Mapowanie](neo4j-mapping-to-languages.png)
+
+Cypher jest deklaratywnym językiem zapytań, który umożliwia nam wyszukiwanie i modyfikację danych grafowych.
+Pierwotnie stworzony na potrzeby bazy [Neo4j](https://neo4j.com/), [lidera w rankingu baz grafowych](https://db-engines.com/en/ranking/graph+dbms), dla wielu praktycznie synonimu takiej bazy.
+W skrócie można powiedzieć, że jest "eskuelem dla grafów".
+Słowa kluczowe `WHERE` czy `ORDER BY` inspirowane właśnie są przez SQL. Język czerpie także ze SPARQL (_pattern matching_) czy Haskella i Pythona. 
+Cypher jest dość intuicyjny i _human-readable_. Z racji tego, że nawiasy okrągłe `()` reprezentują wierzchołki a `-->` krawędzie w opisie przewija się nawet sformułowanie o  _ASCII art_.
 
 Jednym z najprostszych zapytań będzie
 ```
@@ -98,9 +98,8 @@ Istotą grafu są jednak relacje.
 MATCH (p:Person)-[:ACTED_IN]->(:Movie {title: 'The Matrix'})
 RETURN p.name
 ```
-to nazwiska (zwracamy jedynie atrybut `name` a nie cały wierzchołek) osób, które zagrały (relacja `ACTED_IN`) w filmie (wierzchołek typu `Movie`) pod tytułem "The Matrix" (wartość atrybutu `title`).
-Aktorzy to nie jedyne osoby, które są związane z danym filmem. \
-Są jeszcze producenci, reżyserzy... - istnieją zatem różne relacje łączące wierzchołki typu `Person` i `Movie`.
+to nazwiska (zwracamy jedynie atrybut `name` a nie cały wierzchołek) osób, które zagrały (relacja `ACTED_IN`) w filmie (wierzchołek typu `Movie`) pod tytułem "The Matrix" (wartość atrybutu `title`).  
+Aktorzy to nie jedyne osoby, które są związane z danym filmem. Są jeszcze producenci, reżyserzy... - istnieją zatem różne relacje łączące wierzchołki typu `Person` i `Movie`.
 ```
 MATCH (p:Person)-[r]->(m:Movie)
 RETURN p.name, type(r), m.title
@@ -129,7 +128,7 @@ Na potrzeby demo zdefiniujmy abstrakcyjny zbiór pracowników (wierzchołki z et
 
 ![Graf sympatii pracowników](graph-1.png)
 
-Teraz już tylko nasz program...
+Teraz już tylko nasz program, z jakżeż pięknymi (za)pytaniami, które sobie stawiamy...
 
 ```scala
 package pl.cafebabe.spark
@@ -195,7 +194,7 @@ object CypherExample {
 }
 ```
 
-... i wynik wykonania!
+... i otrzymanymi odpowiedziami jako wynik wykonania!
 
 ```
 kto z kim się lubi?
