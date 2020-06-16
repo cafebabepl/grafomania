@@ -3,11 +3,11 @@
 2. «bezwartościowe utwory literackie»  
 (za [Słownikiem Języka Polskiego](https://sjp.pwn.pl/slowniki/grafomania.html))
 3. zamiłowanie do grafów  
-(uzupełnienie [autora](https://www.linkedin.com/in/wlodzimierz-kozlowski/))
+(za [autorem](https://www.linkedin.com/in/wlodzimierz-kozlowski/))
 
 ### _Wpłynąłem na suchego przestwór oceanu_ czyli o tych, którzy docierają do GraphX
 
-(Prawie) każda prezentacja dotycząca Apache Spark<sup>TM</sup> zaczyna się od prezentacji wykresu porównującego czas wykonania _Logistic regression in Hadoop and Spark_.
+(Prawie) każda prezentacja dotycząca Apache Spark<sup>TM</sup> zaczyna się od wykresu porównującego czas wykonania _Logistic regression in Hadoop and Spark_.
 Nad wyższym słupkiem (tym od Hadoopa) widnieje liczba 110, nad niższym, ledwie zauważalnym (tym od Sparka) liczba 0.9. _Run workloads 100x faster._
 Potem drugi obrazek - moduły Sparka: cztery ciemnoniebieskie prostokąty. 
 Wychodzimy od RDD (_Resilient Distributed Dataset_), potem _Spark SQL_, _Spark Streaming_.
@@ -30,15 +30,33 @@ motifs.filter("b.age > 30").show()
 ```
 Więcej? [GraphFrames User Guide](https://graphframes.github.io/graphframes/docs/_site/user-guide.html)
 
+Czuć jednak pewien niedosyt a do tego głosy z sali:
+- "Nie potrzebuję bazy grafowej bo nie będę pisał kolejnego portalu społecznościowego",
+- "Nie budujemy systemu na potrzeby transportu żeby szukać najkrótszych ścieżek".
+- "ZG8gZHVweQ=="
+
+a przecież wszystko jest grafem! Relacje między osobami, zakupy, faktury:
+
+```
+(a:Osoba)-[:LUBI]->[b:Osoba]
+(o:Osoba)-[:KUPILA]->(p:Produkt)
+(m:Faktura)-[:ZAWIERA]->(d:PozycjaRozliczenia)
+``` 
+
+I do tego _The whiteboard model is the physical model_. Musimy rozbudować model? Dodać albo zmienić zależności? 
+Dodajmy bez tych `ALTER TABLE products ADD CONSTRAINT fk_supplier FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id);` 
+
 Wszystko jest grafem! Cały świat jest grafem! "Wybuch mózga!" (Chodzi o gwałtowną produkcję któregoś z hormonów, które często przytrafia się dzieciom kiedy muszą iść spać.
 Tak to zjawisko nazywa nasz 5-letni syn W***k).
 
 ### _Wóz nurza się w zieloność i jak łódka brodzi_ czyli czym jest Cypher
 
 Cypher jest deklaratywnym językiem zapytań, który umożliwia nam wyszukiwanie i modyfikację danych grafowych.
-W skrócie można powiedzieć, że jest "eskuelem dla grafów". 
+Pierwotnie stworzony na potrzeby bazy [Neo4j](https://neo4j.com/), [lidera w rankingu baz grafowych](https://db-engines.com/en/ranking/graph+dbms), dla wielu praktycznie synonimu takiej bazy.
+W skrócie można powiedzieć, że jest "eskuelem dla grafów".
 Słowa kluczowe `WHERE` czy `ORDER BY` inspirowane właśnie są przez SQL. Język czerpie także ze SPARQL (_pattern matching_) czy Haskella i Pythona. 
 Cypher jest dość intuicyjny i _human-readable_. Z racji tego, że nawiasy okrągłe `()` reprezentują wierzchołki a `-->` krawędzie w opisie przewija się nawet sformułowanie o  _ASCII art_.
+
 
 Truizmem jest stwierdzenie, że graf składa się z wierzchołków i krawędzi.
 Wierzchołki definiują nam pewien byt (osobę, miejsce, rzecz, kategorię itd.), krawędzie relacje między wierzchołkami czyli jak te wierzchołki są ze sobą połączone (jestem żonaty z, mieszkam w, znam, lubię, jestem właścicielem itd.).
@@ -50,7 +68,7 @@ Przekładając opis naszych danych w języku naturalnym na schemat bazy:
 - czasownik (_verb_) to nazwa relacji
 - przysłówek (_adverb_) to atrybut  (_property_) krawędzi
 
-TODO obrazek
+![Mapowanie](neo4j-mapping-to-languages.png)
 
 Jednym z najprostszych zapytań będzie
 ```
@@ -201,8 +219,9 @@ pracownicy, którzy niewiele zarabiają ale bardzo lubią Witolda
 
 ```
 
-### _Jedźmy, nikt nie woła._ - zamiast podsumowania...  
-    
+### _Jedźmy, nikt nie woła_ czyli podsumowanie...  
+Apache Spark jest obecnie w wersji `3.0.0-preview2` a [Issue SPARK-25994](https://issues.apache.org/jira/browse/SPARK-25994) ma status `OPEN`.  
+Może jednak w niedługiej przyszłości prezentacje będą już wyglądały inaczej.
 
 ##### @author
 Włodzimierz Kozłowski  
