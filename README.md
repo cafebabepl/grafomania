@@ -48,7 +48,7 @@ I do tego _The whiteboard model is the physical model_. Musimy rozbudować model
 Dodajmy bez tych `ALTER TABLE products ADD CONSTRAINT fk_supplier FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id);` 
 
 Wszystko jest grafem! Cały świat jest grafem! "Wybuch mózga!" (Chodzi o gwałtowną produkcję któregoś z hormonów, które często przytrafia się dzieciom kiedy muszą iść spać.
-Tak to zjawisko nazywa nasz 5-letni syn W***k).
+Tak to zjawisko nazywa nasz 8-letni syn W***k).
 
 ### _Wóz nurza się w zieloność i jak łódka brodzi_ czyli czym jest Cypher
 
