@@ -39,9 +39,9 @@ Czuć jednak pewien niedosyt a do tego głosy z sali:
 a przecież wszystko jest grafem! Relacje między osobami, zakupy, faktury:
 
 ```
-(a:Osoba)-[:LUBI]->[b:Osoba]
+(a:Osoba)-[:LUBI]->(b:Osoba)
 (o:Osoba)-[:KUPILA]->(p:Produkt)
-(m:Faktura)-[:ZAWIERA]->(d:PozycjaRozliczenia)
+(m:Faktura)-[:ZAWIERA]->(d:PozycjaRozliczenia)<-[:DOTYCZY]-(o:Odczyt)
 ``` 
 
 I do tego _The whiteboard model is the physical model_. Musimy rozbudować model? Dodać albo zmienić zależności? 
@@ -215,7 +215,6 @@ pracownicy, którzy niewiele zarabiają ale bardzo lubią Witolda
 ║ 'Piotr'       │ 5099     │ 4        ║
 ╚═══════════════╧══════════╧══════════╝
 (2 rows)
-
 ```
 
 ### _Jedźmy, nikt nie woła_ czyli podsumowanie...  
